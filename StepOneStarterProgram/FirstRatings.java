@@ -91,6 +91,22 @@ public class FirstRatings {
         }
         return raterArr;
     }
+    public HashMap<String,Integer> countEveryMovie(String fileName){
+        ArrayList<Rater> testRaterArr = loadRaters("fileName");
+        HashMap<String,Integer> countEveryMovieWithRatings = new HashMap<String,Integer>();
+        for(Rater rater : testRaterArr){
+            ArrayList<String> itemsRated = rater.getItemsRated();
+            for(String item : itemsRated){
+                if(countEveryMovieWithRatings.containsKey(item)){
+                    countEveryMovieWithRatings.put(item,countEveryMovieWithRatings.get(item)+1);
+                }  
+                else{
+                    countEveryMovieWithRatings.put(item,1);
+                }
+            }
+        }
+        return countEveryMovieWithRatings;
+    }
     public void testLoadRaters(){
         ArrayList<Rater> testRaterArr = loadRaters("data/ratings.csv");
         
@@ -100,7 +116,7 @@ public class FirstRatings {
         String queryRaterID = "193";
         String queryMovie = "1798709";
         int countMovieRated = 0;
-        HashMap<String,Integer> countEveryMovie = new HashMap<String,Integer>();
+        
         int maxRatings = 0;
         //HashMap<String,Integer> raterWithNumRatings = new HashMap<String,Integer>();
         for(Rater rater : testRaterArr){
@@ -114,14 +130,7 @@ public class FirstRatings {
                 countMovieRated++;
             }
             
-            for(String item : itemsRated){
-                if(countEveryMovie.containsKey(item)){
-                    countEveryMovie.put(item,countEveryMovie.get(item)+1);
-                }  
-                else{
-                    countEveryMovie.put(item,1);
-                }
-            }
+            
             int numRatings = rater.numRatings();
             if(numRatings > maxRatings){
                 maxRatings = numRatings;
@@ -137,7 +146,7 @@ public class FirstRatings {
         //System.out.println("There are " + countRatings + " raters");
         System.out.println(countMovieRated + " raters rated the movie " + queryMovie);
         System.out.println("rater " + queryRaterID + " has " + countRatings + " rating");
-        System.out.println(countEveryMovie.size() + " different movies have been rated by all these raters.");
+        //System.out.println(countEveryMovieWithRatings.size() + " different movies have been rated by all these raters.");
         System.out.println("the maximum number of ratings:" 
         + maxRatings + " and those raters are:" + raterWithMaxRatings);
     }
