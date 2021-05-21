@@ -70,7 +70,7 @@ public class FirstRatings {
         System.out.println("the maximum number of films:" + maxNumMovies + " directed by " + directorWithMax);
     }
     public ArrayList<Rater> loadRaters(String filename){
-        FileResource fr = new FileResource(filename);
+        FileResource fr = new FileResource("data/" + filename);
         ArrayList<Rater> raterArr = new ArrayList<Rater>();
         for(CSVRecord raterMessage : fr.getCSVParser()){
             String rater_id = raterMessage.get("rater_id");
