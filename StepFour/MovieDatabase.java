@@ -1,6 +1,7 @@
 import java.util.*;
 import org.apache.commons.csv.*;
 import edu.duke.FileResource;
+import java.util.Random;
 
 public class MovieDatabase {
     private static HashMap<String, Movie> ourMovies;
@@ -17,9 +18,21 @@ public class MovieDatabase {
             ourMovies = new HashMap<String,Movie>();
             loadMovies("data/ratedmoviesfull.csv");
         }
-    }	
+    }   
 
-	
+    public static ArrayList<String> getRandomMovies(int number){
+        ArrayList<String> ret = new ArrayList<String>();
+        Random random = new Random();
+        String[] moviesID = ourMovies.keySet().toArray(new String[0]);
+        for(int i = 0; i < number; i++){
+            String randomMovie = moviesID[random.nextInt(moviesID.length)];
+            while(ret.contains(randomMovie)){
+                randomMovie = moviesID[random.nextInt(moviesID.length)];
+            }
+            ret.add(randomMovie);
+        }
+        return ret;
+    }
     private static void loadMovies(String filename) {
         FirstRatings fr = new FirstRatings();
         ArrayList<Movie> list = fr.loadMovies(filename);
